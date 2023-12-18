@@ -1,0 +1,51 @@
+<button id="addCircleBtn">원 추가</button><br><br>
+<canvas id="myCanvas" width="400" height="400" style="border:1px solid #000000;">
+Your browser does not support the HTML5 canvas tag.</canvas>
+
+<script>
+// 캔버스 요소를 가져오고 컨텍스트를 설정합니다.
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
+var circles = []; // 원들을 저장하는 배열
+
+// 원을 추가하는 함수
+function addCircle() {
+    // 무작위 위치와 크기를 가진 원을 생성합니다.
+    var circle = {
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: 20 + Math.random() * 30, // 20에서 50 사이의 반지름
+        color: getRandomColor()
+    };
+    circles.push(circle);
+    drawCircles(); // 모든 원을 다시 그립니다.
+}
+
+// 모든 원을 그리는 함수
+function drawCircles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // 캔버스를 클리어합니다.
+    circles.forEach(function(circle) {
+        ctx.beginPath();
+        ctx.arc(circle.x, circle.y, circle.radius, 0, Math.PI * 2);
+        ctx.fillStyle = circle.color;
+        ctx.fill();
+        ctx.closePath();
+    });
+}
+
+// 무작위 색상을 생성하는 함수
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+// 버튼 클릭 이벤트 리스너를 추가합니다.
+document.getElementById("addCircleBtn").addEventListener("click", addCircle);
+</script>
+
+</body>
+</html>
